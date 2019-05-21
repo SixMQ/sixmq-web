@@ -16,3 +16,10 @@ export function MessageRepush(messageId) {
     },
   })
 }
+
+export function MessageListByGroup(data) {
+  return request({
+    url: '/message/listByGroup',
+    data
+  })
+}

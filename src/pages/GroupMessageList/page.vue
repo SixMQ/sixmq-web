@@ -14,23 +14,12 @@
           ref="form"
           size="mini">
 
-          <el-form-item label="状态" prop="type">
-            <el-select v-model="form.status" placeholder="请选择">
-              <el-option
-                v-for="item in status"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
-              </el-option>
-            </el-select>
-          </el-form-item>
-
           <el-form-item>
             <el-button
               type="primary"
               @click="handleFormSubmit">
               <d2-icon name="search"/>
-              查询
+              刷新
             </el-button>
           </el-form-item>
 
@@ -50,9 +39,9 @@
 import store from '@/store'
 import router from '@/router'
 import util from '@/libs/util'
-import status from './components/status'
-import detail from './components/detail'
-import group from './components/group'
+import status from '../MessageList/components/status'
+import detail from '../MessageList/components/detail'
+import group from '../MessageList/components/group'
 import '@/components/highlight-styles/github.css'
 export default {
   components: {
@@ -156,11 +145,11 @@ export default {
       this.loadList()
     },
     loadList() {
-      store.dispatch('d2admin/message/list', {
+      store.dispatch('d2admin/message/listByGroup', {
         queueId: this.$route.params.queueId,
+        groupId: this.$route.params.groupId,
         page: this.pagination.currentPage,
         count: this.pagination.pageSize,
-        status: this.form.status,
       }).then(res => {
         this.pagination.total = res.pages * this.pagination.pageSize;
         this.tableData = [];

@@ -8,6 +8,7 @@ import Login from './pages/Login'
 import Error404 from './pages/Error404'
 import HeaderAside from './layouts/HeaderAside'
 import MessageList from './pages/MessageList'
+import GroupMessageList from './pages/GroupMessageList'
 
 // 变量名 routerConfig 为 iceworks 检测关键字
 // ice 会自动在这个变量下添加路由数据
@@ -70,6 +71,15 @@ const routerConfig = [
     layout: HeaderAside,
     meta: {
       title: '消息列表',
+    }
+  },
+  {
+    path: '/groupMessageList',
+    name: 'groupMessageList',
+    component: GroupMessageList,
+    layout: HeaderAside,
+    meta: {
+      title: '分组消息列表',
     }
   }
 ];
