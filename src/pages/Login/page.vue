@@ -23,7 +23,8 @@
           class="page-login--content-main"
           flex="dir:top main:center cross:center">
           <!-- logo -->
-          <img class="page-login--logo" src="./image/logo@2x.png">
+          <!-- <img class="page-login--logo" src="./image/logo@2x.png"> -->
+          <div class="logo-text">SixMQ</div>
           <!-- 表单 -->
           <div class="page-login--form">
             <el-card shadow="never">
@@ -134,6 +135,12 @@ export default {
   background-color: $backgroundColor;
   height: 100%;
   position: relative;
+  .logo-text{
+    font-size: 48px;
+    line-height: 64px;
+    color: #409EFF;
+    font-weight: bold;
+  }
   // 层
   .page-login--layer {
     @extend %full;
