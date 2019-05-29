@@ -6,6 +6,10 @@
     </p>
     <p v-if="delay">延迟 {{delay}} 秒执行, 计划执行时间：<br/>{{delayRunTime|formatDate}}</p>
     <p v-if="timeout > -1">任务超时：{{timeout}} 秒</p>
+    <p v-if="ttl > -1">
+      <template v-if="realTTL > 0">消息即将过期：{{realTTL}} 秒</template>
+      <template v-else>消息已过期</template>
+    </p>
   </div>
 </template>
 
@@ -26,16 +30,36 @@ export default {
       timeout: -1,
       errorCount: 0,
       retry: 0,
+      status: 0,
       statusText: '',
+      ttl: -1,
+      realTTL: 999,
+      ttlHandler: null,
     }
   },
   filters: {
     formatDate(value){
-      return util.formatDate(value);
+      return util.formatDate(new Date(value * 1000));
     },
   },
   mounted() {
-    Object.assign(this.$data, this.data ? this.data : this.$parent.scope.row)
+    this.$nextTick(()=>{
+      Object.assign(this.$data, this.data ? this.data : JSON.parse(JSON.stringify(this.$parent.scope.row)))
+      if(this.ttl > -1)
+      {
+        this.realTTL = this.ttl - 1;
+        this.ttlHandler = setInterval(()=>{
+          --this.realTTL;
+        }, 1000);
+      }
+    })
+  },
+  beforeDestroy(){
+    if(this.ttlHandler)
+    {
+      console.log('clear');
+      clearInterval(this.ttlHandler);
+    }
   }
 }
 </script>
