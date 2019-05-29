@@ -32,6 +32,10 @@ export default {
           key: 'workingCount'
         },
         {
+          title: '成功消息数',
+          key: 'successCount'
+        },
+        {
           title: '失败消息数',
           key: 'failCount'
         },
