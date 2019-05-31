@@ -18,7 +18,7 @@ export default {
         name: 'index',
         fullPath: '/',
         meta: {
-          title: '首页',
+          title: '队列管理',
           auth: false
         }
       }

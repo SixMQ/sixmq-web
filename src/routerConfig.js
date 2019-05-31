@@ -9,6 +9,7 @@ import Error404 from './pages/Error404'
 import HeaderAside from './layouts/HeaderAside'
 import MessageList from './pages/MessageList'
 import GroupMessageList from './pages/GroupMessageList'
+import Connections from './pages/Connections'
 
 // 变量名 routerConfig 为 iceworks 检测关键字
 // ice 会自动在这个变量下添加路由数据
@@ -35,7 +36,7 @@ const routerConfig = [
     component: Index,
     meta: {
       auth: true,
-      title: '首页'
+      title: '队列管理'
     }
   },
   // 刷新页面 必须保留
@@ -80,6 +81,15 @@ const routerConfig = [
     layout: HeaderAside,
     meta: {
       title: '分组消息列表',
+    }
+  },
+  {
+    path: '/connections',
+    name: 'connections',
+    component: Connections,
+    layout: HeaderAside,
+    meta: {
+      title: '连接管理',
     }
   }
 ];

@@ -26,13 +26,11 @@
         </el-form>
     </d2-crud>
     <el-dialog
-      title="消息详情"
+      title="连接详情"
       width="600px"
       :visible.sync="messageDetailVisible"
       :append-to-body="true">
-        <div>
-          <detail v-if="messageDetailVisible" :data="detail"/>
-        </div>
+        <detail v-if="messageDetailVisible" :data="detail"/>
     </el-dialog>
   </d2-container>
 </template>
@@ -41,44 +39,44 @@
 import store from '@/store'
 import router from '@/router'
 import util from '@/libs/util'
-import status from '../MessageList/components/status'
-import detail from '../MessageList/components/detail'
-import group from '../MessageList/components/group'
+import client from './components/client'
+import blockStatus from './components/blockStatus'
+import detail from './components/detail'
 import '@/components/highlight-styles/github.css'
 export default {
   components: {
-    status,
+    client,
+    blockStatus,
     detail,
-    group,
   },
   data () {
     return {
       messageDetailVisible: false,
       columns: [
         {
-          title: '消息ID',
-          key: 'messageId'
+          title: '连接fd',
+          key: 'fd'
         },
         {
-          title: '状态',
+          title: '客户端',
           component: {
-            name: status
+            name: client
           }
         },
         {
-          title: '分组ID',
+          title: '阻塞状态',
           component: {
-            name: group
+            name: blockStatus
           }
         },
         {
-          title: '最后进入时间',
-          key: 'inTime',
+          title: '连接时间',
+          key: 'clientInfo.connect_time',
           formatter: this.formatDate
         },
         {
-          title: '创建时间',
-          key: 'firstInTime',
+          title: '最后通讯时间',
+          key: 'clientInfo.last_time',
           formatter: this.formatDate
         },
       ],
@@ -93,7 +91,7 @@ export default {
       rowHandle: {
         custom: [
           {
-            text: '查看消息',
+            text: '查看详情',
             type: 'primary',
             size: 'small',
             emit: 'custom-emit-1'
@@ -101,34 +99,7 @@ export default {
         ]
       },
       detail: null,
-      status: [
-        {
-          label: '全部',
-          value: 0,
-        },
-        {
-          label: '空闲',
-          value: 1,
-        },
-        {
-          label: '工作中',
-          value: 2,
-        },
-        {
-          label: '成功',
-          value: 3,
-        },
-        {
-          label: '消费失败',
-          value: 4,
-        },
-        {
-          label: '超时失败',
-          value: 5,
-        },
-      ],
       form: {
-        status: 0,
       },
     }
   },
@@ -147,9 +118,7 @@ export default {
       this.loadList()
     },
     loadList() {
-      store.dispatch('d2admin/message/listByGroup', {
-        queueId: this.$route.params.queueId,
-        groupId: this.$route.params.groupId,
+      store.dispatch('d2admin/connection/select', {
         page: this.pagination.currentPage,
         count: this.pagination.pageSize,
       }).then(res => {
@@ -162,7 +131,7 @@ export default {
     },
     handleCustomEvent ({ index, row }) {
       this.detail = row;
-      this.detail.dataText = vkbeautify.json(JSON.stringify(row.data), 4)
+      // this.detail.dataText = vkbeautify.json(JSON.stringify(row.data), 4)
       this.messageDetailVisible = true;
     },
     formatDate(row, column, cellValue, index){
@@ -173,5 +142,8 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
+.page {
+  
+}
 </style>

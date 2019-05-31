@@ -15,19 +15,29 @@ import util from './libs/util.ice'
 
 const asideMenuConfig = [
   {
-    name: '演示页面',
+    name: '队列管理',
     icon: 'folder-o',
-    children: [
-      // {
-      //   name: '演示 1',
-      //   path: '/demo1/'
-      // },
-      // {
-      //   name: '演示 2',
-      //   path: '/demo2/'
-      // }
-    ]
-  }
+    path: '/'
+  },
+  {
+    name: '连接管理',
+    icon: 'folder-o',
+    path: '/connections/'
+  },
+  // {
+  //   name: '演示页面',
+  //   icon: 'folder-o',
+  //   children: [
+  //     // {
+  //     //   name: '演示 1',
+  //     //   path: '/demo1/'
+  //     // },
+  //     // {
+  //     //   name: '演示 2',
+  //     //   path: '/demo2/'
+  //     // }
+  //   ]
+  // }
 ]
 
 // 顶栏菜单配置
