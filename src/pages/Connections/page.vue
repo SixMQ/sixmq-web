@@ -4,7 +4,8 @@
       :columns="columns"
       :data="tableData"
       :rowHandle="rowHandle"
-      @custom-emit-1="handleCustomEvent"
+      @emit-detail="handleDetail"
+      @emit-close="handleClose"
       :pagination="pagination"
       @pagination-current-change="paginationCurrentChange">
         <el-form
@@ -43,6 +44,7 @@ import client from './components/client'
 import blockStatus from './components/blockStatus'
 import detail from './components/detail'
 import '@/components/highlight-styles/github.css'
+import { Message } from 'element-ui'
 export default {
   components: {
     client,
@@ -94,7 +96,13 @@ export default {
             text: '查看详情',
             type: 'primary',
             size: 'small',
-            emit: 'custom-emit-1'
+            emit: 'emit-detail'
+          },
+          {
+            text: '断开',
+            type: 'danger',
+            size: 'small',
+            emit: 'emit-close'
           }
         ]
       },
@@ -129,10 +137,26 @@ export default {
         })
       });
     },
-    handleCustomEvent ({ index, row }) {
+    handleDetail ({ index, row }) {
       this.detail = row;
-      // this.detail.dataText = vkbeautify.json(JSON.stringify(row.data), 4)
       this.messageDetailVisible = true;
+    },
+    handleClose ({ index, row }) {
+      this.$confirm('是否断开连接？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        store.dispatch('d2admin/connection/close', {
+          fd: row.fd,
+        }).then(res => {
+          Message({
+            message: '断开成功',
+            type: 'success'
+          });
+          this.loadList();
+        });
+      });
     },
     formatDate(row, column, cellValue, index){
       let date = new Date(cellValue * 1000);

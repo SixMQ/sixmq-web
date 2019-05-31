@@ -6,3 +6,11 @@ export function ConnectionSelect (data) {
     data
   })
 }
+
+export function ConnectionClose (data) {
+  return request({
+    url: '/connection/close',
+    method: 'POST',
+    data,
+  })
+}

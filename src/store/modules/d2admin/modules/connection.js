@@ -1,14 +1,14 @@
 import util from '@/libs/util.js'
-import { ConnectionSelect } from '@/api/connection';
+import { ConnectionSelect, ConnectionClose } from '@/api/connection';
 
 export default {
   namespaced: true,
   actions: {
-    /**
-     * @description 消息列表
-     */
     select (e, data) {
       return ConnectionSelect(data)
+    },
+    close (e, data) {
+      return ConnectionClose(data)
     },
   }
 }
